@@ -96,7 +96,4 @@ class Map:
         pass
 
 
-graphic = Map(10, 10)
 
-graphic.initialize()
-print(graphic)

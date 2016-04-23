@@ -2,6 +2,9 @@ from map import Map
 from people import Person
 from commands import Command
 from buildings import *
+import os # currently for OS-dependent clearing
+
+
 class Sim:
     def __init__(self,size: list):
         self.people = []
@@ -15,6 +18,7 @@ class Sim:
                      'O2': 1000000}
         self.plants = {}
         self.map = Map(size[0],size[1]) #CONSTANT
+        self.map.initialize()
         self.victory = False
 
     def get_person(self, name): #name is str
@@ -157,7 +161,7 @@ def parse(user_input):
         pass
     else:
         print('Error: Invalid Command, Please try again.')
-
+"""
 while not game.victory:
     while not turn_end:
         command_queue = []
@@ -178,3 +182,40 @@ while not game.victory:
         for x in range(skip_time):
             game.pass_time()
     turn_end = False
+"""
+
+# game loop
+while not game.victory:
+    # change: removed command queue
+    # motivation behind change: if user wants to build on same place twice,
+    #   queue does not recognize error until queue is finalized.
+
+    #_=os.system("cls") # windows
+    #_=os.system("clear") # linux / unix derivatives
+
+    os.system("cls" if os.name == 'nt' else 'clear')
+    while not turn_end:
+
+        print(game.map)
+        command = input("Enter a command: ")
+        #_=os.system("clear") # linux / unix
+        #_=os.system("cls") # windows
+        os.system("cls" if os.name == 'nt' else 'clear')
+        if command.upper() == "EXIT":
+            turn_end = True
+        else:
+            parse(command)
+
+
+    if not game.victory:
+        # time skipping function
+        skip_time = input('\nHow long would you like to skip time for: ')
+        while not skip_time.isdigit():
+            print('Invalid input, please only enter an integer.')
+            skip_time = input('\nHow long would you like to skip time for: ')
+        skip_time = int(skip_time)
+        for x in range(skip_time):
+            game.pass_time()
+    turn_end = False
+
+

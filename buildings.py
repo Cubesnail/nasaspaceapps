@@ -5,7 +5,7 @@ from materials import Resources
 
 class Agriculture(Building):
 
-    def __init__(self, cost: int, plant: Plant = None, worker: Person = None):
+    def __init__(self, plant: Plant = None, worker: Person = None):
         """
 
         :param plant: Plant
@@ -15,10 +15,9 @@ class Agriculture(Building):
         self.plant = plant
         self.amount = 0
         self.capacity = 10
-        self.cost = cost
         self.building_time = 20 #CONSTANT
         self.worker = worker
-        self.resources = Resources(3000, 11000) 
+        self.resources = Resources(3000, 11000)
     def is_built(self):
         return self.building_time <= 0
 
@@ -48,7 +47,7 @@ class Agriculture(Building):
 
 class MedicalCentre(Building):
 
-    def __init__(self, cost: int, worker: Person = None):
+    def __init__(self, worker: Person = None):
         self.capacity = 10 #CONSTANT
         self.building_time = 20 #CONSTANT
         self.persons = []
@@ -76,7 +75,7 @@ class MedicalCentre(Building):
 
 class CommandCentre(Building):
 
-    def __init__(self, cost: int, worker: Person = None):
+    def __init__(self, worker: Person = None):
         self.building_time = 30 #CONSTANT
         self.worker = worker
 
@@ -90,7 +89,7 @@ class CommandCentre(Building):
 
 class Mine(Building):
 
-    def __init__(self, cost: int, worker: Person = None):
+    def __init__(self, worker: Person = None):
         self.building_time = 10 #CONSTANT
         self.worker = worker
         self.resources = {}
@@ -123,7 +122,7 @@ class Mine(Building):
 
 class Lab(Building):
 
-    def __init__(self, cost: int, worker: Person = None, research = None, research_time = 0):
+    def __init__(self, worker: Person = None, research = None, research_time = 0):
         self.building_time = 15 #CONSTANT
         self.worker = worker
         self.research = research

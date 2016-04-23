@@ -17,4 +17,4 @@ class Person:
         self.health += factor
 
     def is_ded(self):
-        return self.health <= -100 or self.age >= 70
+        return self.health <= -100 or self.age >= 70*52

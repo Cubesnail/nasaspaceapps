@@ -5,12 +5,12 @@ from commands import Command
 class sim:
     def __init__(self,size: list):
         self.people = []
-        self.people.append(Person('John','20','45','M'))
-        self.people.append(Person('Josh','20','45','M'))
-        self.people.append(Person('Jacob','20','45','M'))
-        self.people.append(Person('Jessica','20','45','F'))
-        self.people.append(Person('Jane','20','45','F'))
-        self.people.append(Person('Jackyln','20','45','F'))
+        self.people.append(Person('John','20*52','45','M'))
+        self.people.append(Person('Josh','20*52','45','M'))
+        self.people.append(Person('Jacob','20*52','45','M'))
+        self.people.append(Person('Jessica','20*52','45','F'))
+        self.people.append(Person('Jane','20*52','45','F'))
+        self.people.append(Person('Jackyln','20*52','45','F'))
         self.materials = {'Al':100000, 'Si': 100000, 'Ti': 100000, 'Fe': 100000, 'Acrylic': 100000, 'H20': 1000000,
                      'O2': 1000000}
         self.plants = {}
@@ -19,29 +19,6 @@ class sim:
 
     def display_summary(self):
         pass
-
-
-def parse(user_input):
-    command_list = user_input.split()
-
-    if command_list[0].upper() == 'build'.upper():
-        if command_list[1].upper is in ['buildings'] #  TODO
-            pass
-    elif command_list[0].upper() == 'destroy'.upper():
-        pass
-    elif command_list[0].upper() == 'help'.upper():
-        pass
-    elif command_list[0].upper() == 'collect'.upper():
-        pass
-    elif command_list[0].upper() == 'send'.upper():
-        pass
-    elif command_list[0].upper() == 'explore'.upper():
-        pass
-    elif command_list[0].upper() == 'cancel'.upper():
-        pass
-    else:
-        print('Error: Invalid Command, Please try again.')
-
 
 class Build(Command):
     def __init__(self, building, location, grid):
@@ -86,6 +63,28 @@ class Research(Command):
     def do(self):
         #  TODO
         pass
+
+
+def parse(user_input):
+    command_list = user_input.split()
+
+    if command_list[0].upper() == 'build'.upper():
+        if command_list[1].upper is in ['buildings'] #  TODO
+            pass
+    elif command_list[0].upper() == 'destroy'.upper():
+        pass
+    elif command_list[0].upper() == 'help'.upper():
+        pass
+    elif command_list[0].upper() == 'collect'.upper():
+        pass
+    elif command_list[0].upper() == 'send'.upper():
+        pass
+    elif command_list[0].upper() == 'explore'.upper():
+        pass
+    elif command_list[0].upper() == 'cancel'.upper():
+        pass
+    else:
+        print('Error: Invalid Command, Please try again.')
 
 
 game = sim([10,10])

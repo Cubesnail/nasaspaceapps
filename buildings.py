@@ -54,7 +54,8 @@ class MedicalCentre(Building):
         self.persons = []
         self.worker = worker
 
-        self.resources = Resources(3000, 9000, 2000) 
+        self.resources = Resources(3000, 9000, 2000)
+
     def is_built(self):
         return self.building_time <= 0
 

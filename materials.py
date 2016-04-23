@@ -20,7 +20,7 @@ class Material:
         return self.mass < other.mass
 
 
-class Resource:
+class Resources:
     def __init__(self, Al=0, Fe=0, Si=0, acrylic=0, H2O=0, O2=0):
         self.Al, self.Fe, self.Si, self.acrylic, self.H2O, self.O2 = \
                 Al, Fe, Si, acrylic, H2O, O2

@@ -2,7 +2,7 @@ from map import Map
 from people import Person
 from commands import Command
 
-class sim:
+class Sim:
     def __init__(self,size: list):
         self.people = []
         self.people.append(Person('John','20*52','45','M'))
@@ -21,28 +21,28 @@ class sim:
         pass
 
 class Build(Command):
-    def __init__(self, building, location, grid):
-        self.location = location
-        self.grid = grid
-        self.building = building
+    def __init__(self, building, location, simulation):
+        self.location, self.building, self.simulation = location, building, simulation
 
     def do(self):
+        if self.building.resources <= self.simulation.resources:
+            self.simulation.map[self.location[0],self.location[1]] = self.building
 
 class Destroy(Command):
-    #  TODO
-    def __init__(self, location):
-        self.location = location
+    def __init__(self, location, simulation):
+        self.location, self.simulation = location, simulation
     def do(self):
-        #  TODO
-        pass
+        self.simulation.resources += self.simulation.map[self.location[0],self.location[1]].resources
+        self.simulation.map[self.location[0],self.location[1]] = None
 
 class Collect(Command):
     #  TODO
-    def __init__(self,location):
-        self.location = location
+    def __init__(self,location,simulation):
+        self.location,self.simulation = location, simulation
     def do(self):
-        #  TODO
-        pass
+        if type(self.simulation.map[self.location[0],self.location[1]]) in ['Mine', 'Agriculture']:
+            self.simulation.map[self.location[0],self.location[1]].collect()
+
 
 class SendWorker(Command):
     #  TODO
@@ -65,11 +65,14 @@ class Research(Command):
         pass
 
 
+game = Sim([10,10])
+
+turn_end = False
 def parse(user_input):
     command_list = user_input.split()
 
     if command_list[0].upper() == 'build'.upper():
-        if command_list[1].upper is in ['buildings'] #  TODO
+        if command_list[1].upper in ['buildings']: #  TODO
             pass
     elif command_list[0].upper() == 'destroy'.upper():
         pass
@@ -85,11 +88,6 @@ def parse(user_input):
         pass
     else:
         print('Error: Invalid Command, Please try again.')
-
-
-game = sim([10,10])
-
-turn_end = False
 
 while not game.victory:
     while not turn_end:

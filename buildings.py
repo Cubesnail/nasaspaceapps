@@ -1,9 +1,9 @@
-from environment import Environment
+from environment import Building
 from plants import Plant
 from people import Person
 
 
-class Agriculture(Environment):
+class Agriculture(Building):
 
     def __init__(self, cost: int, plant: Plant = None, worker: Person = None):
         """
@@ -46,7 +46,7 @@ class Agriculture(Environment):
         pass
 
 
-class MedicalCentre(Environment):
+class MedicalCentre(Building):
 
     def __init__(self, cost: int, worker: Person = None):
         self.capacity = 10 #CONSTANT
@@ -72,7 +72,7 @@ class MedicalCentre(Environment):
         return len(self.persons) == self.capacity
 
 
-class CommandCentre(Environment):
+class CommandCentre(Building):
 
     def __init__(self, cost: int, worker: Person = None):
         self.building_time = 30 #CONSTANT
@@ -85,7 +85,7 @@ class CommandCentre(Environment):
         self.building_time -= 1
 
 
-class Mine(Environment):
+class Mine(Building):
 
     def __init__(self, cost: int, worker: Person = None):
         self.building_time = 10 #CONSTANT
@@ -116,7 +116,7 @@ class Mine(Environment):
         return False
 
 
-class Lab(Environment):
+class Lab(Building):
 
     def __init__(self, cost: int, worker: Person = None, research = None, research_time = 0):
         self.building_time = 15 #CONSTANT

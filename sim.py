@@ -151,7 +151,7 @@ def parse(user_input):
                 elif command_list[1].upper() == 'LAB':
                     return Build(Lab(), [command_list[2], command_list[3]], game)
                 elif command_list[1].upper() == 'COMMANDCENTRE':
-                    return Build(CommandCentre(), [command_list[3], command_list[4]], game)
+                    return Build(CommandCentre(), [int(command_list[2]), int(command_list[3])], game)
                 elif command_list[1].upper() == 'MEDICALCENTRE':
                     return Build(MedicalCentre(), [command_list[3], command_list[4]], game)
                 elif command_list[1].upper90 == 'AGRICULTURE':
@@ -188,28 +188,7 @@ def parse(user_input):
     else:
         print('Error: Invalid Command, Please try again.')
     return Nothing()
-"""
-while not game.victory:
-    while not turn_end:
-        command_queue = []
-        print(game.map)
-        print('What would you like to do?')
-        command = input('\nEnter action: ')
-        parsed_command = parse(command)
-        if command == 'Exit':
-            turn_end = True
-        if parsed_command:
-            command_queue.append(parsed_command)
-    if not game.victory:
-        skip_time = input('\nHow long would you like to skip time for: ')
-        while not skip_time.isdigit():
-            print('Invalid input, please only enter an integer.')
-            skip_time = input('\nHow long would you like to skip time for: ')
-        skip_time = int(skip_time)
-        for x in range(skip_time):
-            game.pass_time()
-    turn_end = False
-"""
+
 
 # game loop
 while not game.victory:

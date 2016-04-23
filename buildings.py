@@ -92,6 +92,7 @@ class Mine(Building):
         self.worker = worker
         self.resources = {}
         self.capacity = 30 #CONSTANT
+
     def is_built(self):
         return self.building_time <= 0
 

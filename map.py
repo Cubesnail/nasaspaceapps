@@ -1,9 +1,11 @@
-# SIMULATOR
-# main program
+#  SIMULATOR
+#  main program
 from buildings import *
 import os # used for: clear, 
 
-class map:
+
+class Map:
+
     def __init__(self, width, height):
         self.width = width
         self.height = height
@@ -42,19 +44,32 @@ class map:
             temp.append("-")
         self.screen.append(temp)
 
-    def display (self):
+    def display(self):
         # TODO
         
         for k in range (0, self.height+2):
             for x in range(0, self.width+2):
                 print(self.screen[k][x], end = '')
             print()
-    def update (self):
+
+    def __str__(self):
+        result = ''
+        for column in self.screen:
+            for row in column:
+                if row:
+                    result = result + row
+                else:
+                    result = result + 'O'
+            result = result + '\n'
+        return result
+
+    def update(self):
         # update
         pass
 
 
-graphic = map(5, 5)
+graphic = Map(5, 5)
 
 graphic.initialize()
 graphic.display()
+print(graphic)

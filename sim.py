@@ -30,7 +30,7 @@ class Sim:
         pass
 
     def pass_time(self):
-        for column in map.screen:
+        for column in self.map.screen:
             for row in column:
                 row.time_pass()
 
@@ -115,17 +115,18 @@ def parse(user_input):
     # example: build mine 1 2
     # -> builds mine at location 1,2
     if command_list[0].upper() == 'build'.upper():
-        if command_list[1].upper in ['MINE','LAB','COMMANDCENTRE','MEDICALCENTRE','AGRICULTURE']: #  TODO
-            if command_list[2] < game.map.height and command_list[3] < game.map.width:
-                if command_list[1].upper == 'MINE':
-                    return Build(Mine(),[command_list[3],command_list[4]],game)
-                else if command_list[1].upper == 'LAB':
-                    return Build(Lab(), [command_list[3], command_list[4]], game)
-                else if command_list[1].upper == 'COMMANDCENTRE':
+        print(command_list[1].upper())
+        if command_list[1].upper() in ['MINE','LAB','COMMANDCENTRE','MEDICALCENTRE','AGRICULTURE']: #  TODO
+            if int(command_list[2]) < game.map.height and int(command_list[3]) < game.map.width:
+                if command_list[1].upper() == 'MINE':
+                    return Build(Mine(),[command_list[2],command_list[3]],game)
+                elif command_list[1].upper() == 'LAB':
+                    return Build(Lab(), [command_list[2], command_list[3]], game)
+                elif command_list[1].upper() == 'COMMANDCENTRE':
                     return Build(CommandCentre(), [command_list[3], command_list[4]], game)
-                else if command_list[1].upper == 'MEDICALCENTRE':
+                elif command_list[1].upper() == 'MEDICALCENTRE':
                     return Build(MedicalCentre(), [command_list[3], command_list[4]], game)
-                else if command_list[1].upper == 'AGRICULTURE':
+                elif command_list[1].upper90 == 'AGRICULTURE':
                     return Build(Agriculture(), [command_list[3], command_list[4]], game)
                 else:
                     print('Error: Invalid Command, Please try again.')
@@ -146,13 +147,13 @@ def parse(user_input):
         # if command_list[1] in game.people[]
         if command_list[1] < game.map.height and command_list[2] < game.map.width:
             work = game.people[command_list[1]]
-            return Send(game.get_person(command_list[1], [command_list[2], command_list[3], game])
-
+            return Send(game.get_person(command_list[1]), [command_list[2], command_list[3], game])
     elif command_list[0].upper() == 'explore'.upper():
         if command_list[2] < game.map.width and command_list[3] < game.map.width:
-            return Explore(game.get_person(command_list[1]), [command_list[2], command_list[3])
-
+            return Explore(game.get_person(command_list[1]), [command_list[2], command_list[3]],game)
     elif command_list[0].upper() == 'cancel'.upper():
+        pass
+    elif command_list[0].upper() == 'EXIT':
         pass
     else:
         print('Error: Invalid Command, Please try again.')
@@ -176,3 +177,4 @@ while not game.victory:
         skip_time = int(skip_time)
         for x in range(skip_time):
             game.pass_time()
+    turn_end = False

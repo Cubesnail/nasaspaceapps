@@ -2,7 +2,7 @@
 
 class Plant:
     # __init__: self, Str, Num, Num, Int, Int, Int
-    def __init__(self, name, rog, area, numHarvest, numGrow):
+    def __init__(self, name, rog, area, numHarvest, numGrow, mass):
         self.name = name
         self.mass = mass
         self.rog = rog
@@ -12,7 +12,7 @@ class Plant:
         self.area = area  # occupied area at full growth
         self.numHarvest = numHarvest
         self.numGrow = numGrow
-        self.percentGrow = percentGrow
+        self.percentGrow = 0
 
     # update_growth: self -> void
     # effects: modifies self.percentGrow, self.numHarvest, self.numGrow
@@ -34,3 +34,6 @@ class Plant:
         temp = self.numHarvest
         self.numHarvest = 0
         return temp
+
+    def is_full(self):
+        return self.numHarvest == 100

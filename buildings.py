@@ -14,7 +14,7 @@ class Agriculture(Building):
         """
         self.plant = plant
         self.amount = 0
-        self.capacity = 10
+        self.capacity = 1000
         self.building_time = 20 #CONSTANT
         self.worker = worker
         self.resources = Resources(3000, 11000)
@@ -24,13 +24,14 @@ class Agriculture(Building):
     def collect(self):
         #  TODO
         if self.is_built() and self.worker:
-            return self.plant
+            return self.amount
         return -1
 
     def time_pass(self, time: int = 1):
 
         if self.is_built():
             if self.plant and self.worker:
+                self.amount += 100
                 self.plant.update_growth()
         self.building_time -= 1
 
@@ -52,7 +53,7 @@ class MedicalCentre(Building):
         self.building_time = 20 #CONSTANT
         self.persons = []
         self.worker = worker
-
+        self.amount = Resources()
         self.resources = Resources(3000, 9000, 2000)
 
     def is_built(self):
@@ -62,7 +63,6 @@ class MedicalCentre(Building):
         if not self.is_built():
             self.building_time -= 1
             return
-
         for person in self.persons:
             person.health += round(10/len(self.persons) + 0.5)
             if person.health >= 10:
@@ -92,24 +92,25 @@ class Mine(Building):
     def __init__(self, worker: Person = None):
         self.building_time = 10 #CONSTANT
         self.worker = worker
-        self.resources = {}
+        self.amount = Resources()
         self.capacity = 30 #CONSTANT
-
+        self.amount = Resources()
         self.resources = Resources(0, 12000) 
     def is_built(self):
         return self.building_time <= 0
 
     def time_pass(self):
         #  TODO
-        if not self.is_built():
-            self.building_time -= 1
-            return
+        if self.is_built() and self.worker:
+            self.amount.Al += 1000
+
+        self.building_time -= 1
 
     def collect(self):
-        #  TODO
-        pass
+
+        return self.amount
     def is_empty(self):
-        return self.resources == {}
+        return self.amount == {}
 
     def is_full(self):
         resource = 0

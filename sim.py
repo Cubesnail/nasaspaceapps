@@ -70,22 +70,22 @@ class Collect(Command):
         self.location,self.simulation = location, simulation
 
     def do(self):
-        if type(self.simulation.map[self.location[0],self.location[1]]) in ['Mine', 'Agriculture']:
-            self.simulation.map[self.location[0],self.location[1]].collect()
+        self.simulation.resources += self.simulation.map.screen[self.location[0]][self.location[1]].collect()
 
 
 class SendWorker(Command):
     #  TODO
-    def __init__(self, worker, location, game):
+    def __init__(self, worker, location, sim):
         self.location = location
         self.worker = worker
-        self.simulation = game
+        self.simulation = sim
+
     def do(self):
         #  TODO
-        self.simulation(self.location).persons.append(self.worker)
-
+        self.simulation.map.screen[self.location[0]][self.location[1]].worker = self.worker
 
 class Research(Command):
+
     #  TODO
     def __init__(self, product, location):
         self.location = location
@@ -167,13 +167,13 @@ def parse(user_input):
     elif command_list[0].upper() == 'help'.upper():
         help_commands()
     elif command_list[0].upper() == 'collect'.upper():
-        if command_list[1] < game.map.height and command_list[2] < game.map.width:
-            return Collect([command_list[1], command_list[2]], game)
+        if int(command_list[1]) < game.map.height and int(command_list[2]) < game.map.width:
+            return Collect([int(command_list[1]), int(command_list[2])], game)
     elif command_list[0].upper() == 'send'.upper():
         # if command_list[1] in game.people[]
-        if command_list[1] < game.map.height and command_list[2] < game.map.width:
-            work = game.people[command_list[1]]
-            return Send(game.get_person(command_list[1]), [command_list[2], command_list[3], game])
+        if int(command_list[2]) < game.map.height and int(command_list[3]) < game.map.width:
+            #  work = game.people[command_list[1]]
+            return SendWorker(game.get_person(command_list[1]), [int(command_list[2]), int(command_list[3])], game)
     elif command_list[0].upper() == 'explore'.upper():
         if command_list[2] < game.map.width and command_list[3] < game.map.width:
             return Explore(game.get_person(command_list[1]), [command_list[2], command_list[3]],game)
@@ -228,7 +228,6 @@ while not game.victory:
             turn_end = True
         else:
             parse(command).do()
-
 
     if not game.victory:
         # time skipping function

@@ -9,14 +9,14 @@ import random
 # resource order: Al, Fe, Si
 
 
-class crater:
+class Crater:
     def __init__(self, isExplored):
         self.isBuildable = False
         self.isExplored = isExplored
         self.hasResources = False
 
 
-class cave:
+class Cave:
     def __init__(self, isExplored):
         self.isBuildable = False
         self.isExplored = isExplored

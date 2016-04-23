@@ -2,7 +2,8 @@
 #  main program
 from buildings import *
 import os # used for: clear, 
-
+import random
+from natstruct import *
 
 class Map:
 
@@ -12,12 +13,7 @@ class Map:
         self.objects = []
         self.screen = []
     def initialize(self):
-        # TODO
 
-        # O: open
-        # B: base
-        # 
-        
         # initialzie graphical array
         # graphical array: position index start at 1 (border is 0)
         self.screen = []
@@ -26,12 +22,10 @@ class Map:
         temp = []
         for k in range(0, self.width+2):
             temp.append("-")
-        temp.append("\n")
         self.screen.append(temp)
 
-        
         for k in range(0, self.height):
-            temp = ["|"] 
+            temp = ["|"]
             for x in range(0, self.width):
                 temp.append(None)
             temp.append("|")
@@ -44,9 +38,26 @@ class Map:
             temp.append("-")
         self.screen.append(temp)
 
+
+        # insert random natstruct
+
+        area = self.width * self.height
+        # approximately 20% of terrian is natstruct
+        numstruct = int(0.2 * area)
+        numcrater = random.randint(1, numstruct)
+        numcave = numstruct - numcrater
+
+        for k in range (0, numcrater):
+            rx = random.randint(1, self.width)
+            ry = random.randint(1, self.height)
+            self.screen[rx][ry] = Crater(False)
+        for k in range (0, numcave):
+            rx = random.randint(1, self.width)
+            ry = random.randint(1, self.height)
+            self.screen[rx][ry] = Cave(False)
+
     def display(self):
         # TODO
-        
         for k in range (0, self.height+2):
             for x in range(0, self.width+2):
                 print(self.screen[k][x], end = '')
@@ -56,7 +67,21 @@ class Map:
         result = ''
         for column in self.screen:
             for row in column:
-                if row:
+                if type(row) is Agriculture:
+                    result = result + 'A'
+                elif type(row) is MedicalCentre:
+                    result = result + '+'
+                elif type(row) is CommandCentre:
+                    result = result + '*'
+                elif type(row) is Mine:
+                    result = result + 'M'
+                elif type(row) is Lab:
+                    result = result + 'L'
+                elif type(row) is Crater:
+                    result = result + 'V'
+                elif type(row) is Cave:
+                    result = result + '^'
+                elif type(row) is str:
                     result = result + row
                 else:
                     result = result + 'O'
@@ -68,8 +93,7 @@ class Map:
         pass
 
 
-graphic = Map(5, 5)
+graphic = Map(10, 10)
 
 graphic.initialize()
-graphic.display()
 print(graphic)

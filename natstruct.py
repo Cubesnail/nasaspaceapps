@@ -14,6 +14,7 @@ class Crater(NatStruct):
         self.isBuildable = False
         self.isExplored = isExplored
         self.hasResources = False
+        self.type = 'Crater'
     def __str__(self):
         return 'A hole in the ground. But kind of not a hole.'
 
@@ -24,6 +25,7 @@ class Cave(NatStruct):
         self.isExplored = isExplored
         self.resources = {}
         self.hasResources = False
+        self.type = 'Cave'
 
         # arbitrary random chance generation shit
 
@@ -39,11 +41,13 @@ class Cave(NatStruct):
             self.resources["Si"] = amtSi
     def __str__(self):
         return 'Its a cave. It might have something. It might not'
+
 class Ground(NatStruct):
     def __init__(self, isExplored):
         self.isBuildable = True
         self.isExplored = False
         self.resources = {}
         self.hasResources = False
+        self.type = 'Ground'
     def __str__(self):
         return 'Its ground.'

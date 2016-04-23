@@ -1,7 +1,7 @@
 from environment import Building
 from plants import Plant
 from people import Person
-
+from materials import Resources
 
 class Agriculture(Building):
 
@@ -18,7 +18,7 @@ class Agriculture(Building):
         self.cost = cost
         self.building_time = 20 #CONSTANT
         self.worker = worker
-
+        self.resources = Resources(3000, 11000) 
     def is_built(self):
         return self.building_time <= 0
 
@@ -44,7 +44,7 @@ class Agriculture(Building):
 
     def __repr__(self):
         pass
-
+    
 
 class MedicalCentre(Building):
 
@@ -54,6 +54,7 @@ class MedicalCentre(Building):
         self.persons = []
         self.worker = worker
 
+        self.resources = Resources(3000, 9000, 2000) 
     def is_built(self):
         return self.building_time <= 0
 
@@ -78,6 +79,7 @@ class CommandCentre(Building):
         self.building_time = 30 #CONSTANT
         self.worker = worker
 
+        self.resources = Resources(4000, 10000, 1000) 
     def is_built(self):
         return self.building_time <=0
 
@@ -93,6 +95,7 @@ class Mine(Building):
         self.resources = {}
         self.capacity = 30 #CONSTANT
 
+        self.resources = Resources(0, 12000) 
     def is_built(self):
         return self.building_time <= 0
 
@@ -125,6 +128,7 @@ class Lab(Building):
         self.research = research
         self.research_time = research_time
 
+        self.resources = Resources(5000, 9000, 4000) 
     def is_built(self):
         return self.building_time <= 0
 

@@ -1,11 +1,7 @@
 class Environment:
-    def collect(self):
-        raise NotImplementedError
-    def create(self):
-        raise NotImplementedError
-    def destroy(self):
-        raise NotImplementedError
+
     def time_pass(self):
         raise NotImplementedError
+
     def is_built(self):
         raise NotImplementedError

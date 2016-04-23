@@ -1,11 +1,13 @@
 from environment import Environment
-from Materials import Plant
+from plants import Plant
+from people import Person
+
 class Agriculture(Environment):
 
     def __init__(self, cost: int, plant: Plant = None, worker: Person = None):
         """
 
-        :param type: Plant
+        :param plant: Plant
         :param cost:
         :return:
         """
@@ -65,6 +67,10 @@ class CommandCentre(Environment):
     def is_built(self):
         return self.building_time <=0
 
+    def time_pass(self):
+        #  TODO
+        pass
+
 class Mine(Environment):
 
     def __init__(self, cost: int, worker: Person = None):
@@ -81,7 +87,7 @@ class Mine(Environment):
 
     def collect(self):
         #  TODO
-
+        pass
     def is_empty(self):
         return self.resources == {}
 
@@ -93,4 +99,16 @@ class Mine(Environment):
             return True
         return False
 
-class Lab(Environment)
+class Lab(Environment):
+
+    def __init__(self, cost: int, worker: Person = None, research = None):
+        self.building_time = 15 #CONSTANT
+        self.worker = worker
+        self.research = research
+
+    def is_built(self):
+        return self.building_time <= 0
+
+    def time_pass(self):
+        #  TODO
+        pass

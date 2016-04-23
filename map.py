@@ -19,24 +19,25 @@ class Map:
         self.screen = []
 
         # create top border
-        temp = []
-        for k in range(0, self.width+2):
-            temp.append("-")
-        self.screen.append(temp)
+        #  temp = []
+        # for k in range(0, self.width+2):
+        #     temp.append("-")
+        #  self.screen.append(temp)
 
-        for k in range(0, self.height):
-            temp = ["|"]
-            for x in range(0, self.width):
+        for k in range(self.height):
+            # temp = ["|"]
+            temp = []
+            for x in range(self.width):
                 temp.append(Ground(False))
-            temp.append("|")
+            # temp.append("|")
             #  temp.append('\n')
             self.screen.append(temp)
 
         # create bottom border
-        temp = []
-        for k in range(0, self.width+2):
-            temp.append("-")
-        self.screen.append(temp)
+        # temp = []
+        # for k in range(0, self.width+2):
+        #     temp.append("-")
+        # self.screen.append(temp)
 
 
         # insert random natstruct
@@ -48,12 +49,12 @@ class Map:
         numcave = numstruct - numcrater
 
         for k in range (0, numcrater):
-            rx = random.randint(1, self.width)
-            ry = random.randint(1, self.height)
+            rx = random.randint(1, self.width - 1)
+            ry = random.randint(1, self.height - 1)
             self.screen[rx][ry] = Crater(False)
         for k in range (0, numcave):
-            rx = random.randint(1, self.width)
-            ry = random.randint(1, self.height)
+            rx = random.randint(1, self.width - 1)
+            ry = random.randint(1, self.height - 1)
             self.screen[rx][ry] = Cave(False)
 
     def display(self):
@@ -68,7 +69,11 @@ class Map:
 
     def __str__(self):
         result = ''
+        for x in range(self.width+2):
+            result = result + '-'
+        result = result + '\n'
         for column in self.screen:
+            result = result + '|'
             for row in column:
                 if type(row) is Agriculture:
                     result = result + 'A'
@@ -88,7 +93,11 @@ class Map:
                     result = result + row
                 elif type(row) is Ground:
                     result = result + 'O'
+            result = result + '|'
             result = result + '\n'
+        for x in range(self.width+2):
+            result = result + '-'
+        result = result + '\n'
         return result
 
     def update(self):

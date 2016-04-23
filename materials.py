@@ -42,3 +42,5 @@ class Resources:
                 self.H2O == other.H2O and \
                 self.O2 == other.O2
 
+    def __gt__(self, other):
+        return other < self

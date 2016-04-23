@@ -8,23 +8,24 @@ import os # currently for OS-dependent clearing
 class Sim:
     def __init__(self,size: list):
         self.people = []
-        self.people.append(Person('John','20*52','45','M'))
-        self.people.append(Person('Josh','20*52','45','M'))
-        self.people.append(Person('Jacob','20*52','45','M'))
-        self.people.append(Person('Jessica','20*52','45','F'))
-        self.people.append(Person('Jane','20*52','45','F'))
-        self.people.append(Person('Jackyln','20*52','45','F'))
-        self.materials = {'Al':100000, 'Si': 100000, 'Ti': 100000, 'Fe': 100000, 'Acrylic': 100000, 'H20': 1000000,
-                     'O2': 1000000}
+        self.people.append(Person('John', '20*52', '45', 'M'))
+        self.people.append(Person('Josh', '20*52', '45', 'M'))
+        self.people.append(Person('Jacob', '20*52', '45', 'M'))
+        self.people.append(Person('Jessica', '20*52', '45', 'F'))
+        self.people.append(Person('Jane', '20*52', '45', 'F'))
+        self.people.append(Person('Jackyln', '20*52', '45', 'F'))
+        self.resources = Resources(100000, 100000, 100000, 100000, 100000, 100000)
         self.plants = {}
         self.map = Map(size[0],size[1]) #CONSTANT
         self.map.initialize()
         self.victory = False
 
+
     def get_person(self, name): #name is str
         for pplz in self.people:
             if pplz.name == name:
                 return pplz
+
     def person_exist(self,name):
         for pplz in self.people:
             if pplz.name == name:
@@ -44,8 +45,10 @@ class Build(Command):
         self.location, self.building, self.simulation = location, building, simulation
 
     def do(self):
-        if self.building.resources <= self.simulation.resources:
-            self.simulation.map[self.location[0],self.location[1]] = self.building
+        if self.building.resources < self.simulation.resources:
+            self.simulation.map.screen[self.location[0]][self.location[1]] = self.building
+        else:
+            print('Not enough resources.')
 
 
 class Destroy(Command):
@@ -61,6 +64,7 @@ class Collect(Command):
     #  TODO
     def __init__(self,location,simulation):
         self.location,self.simulation = location, simulation
+
     def do(self):
         if type(self.simulation.map[self.location[0],self.location[1]]) in ['Mine', 'Agriculture']:
             self.simulation.map[self.location[0],self.location[1]].collect()
@@ -76,6 +80,7 @@ class SendWorker(Command):
         #  TODO
         self.simulation(self.location).persons.append(self.worker)
 
+
 class Research(Command):
     #  TODO
     def __init__(self, product, location):
@@ -85,6 +90,7 @@ class Research(Command):
     def do(self):
         #  TODO
         pass
+
 
 class Explore(Command):
 
@@ -97,6 +103,12 @@ class Explore(Command):
         if type(game.get_environment(location)) == NatStruct:
             game.get_environment(location).isExplored = True
 
+class Nothing(Command):
+    def __init__(self):
+        pass
+
+    def do(self):
+        pass
 
 game = Sim([10,10])
 
@@ -114,6 +126,8 @@ def help_commands():
     print("-- send WORKER LOC_X LOC_Y")
 
 def parse(user_input):
+    """ Takes a user input and parses it and returns a command.
+    """
     command_list = user_input.split()
     # syntax: command || location || 
     # example: build mine 1 2
@@ -123,7 +137,7 @@ def parse(user_input):
         if command_list[1].upper() in ['MINE','LAB','COMMANDCENTRE','MEDICALCENTRE','AGRICULTURE']: #  TODO
             if int(command_list[2]) < game.map.height and int(command_list[3]) < game.map.width:
                 if command_list[1].upper() == 'MINE':
-                    return Build(Mine(),[command_list[2],command_list[3]],game)
+                    return Build(Mine(),[int(command_list[2]),int(command_list[3])],game)
                 elif command_list[1].upper() == 'LAB':
                     return Build(Lab(), [command_list[2], command_list[3]], game)
                 elif command_list[1].upper() == 'COMMANDCENTRE':
@@ -161,6 +175,7 @@ def parse(user_input):
         pass
     else:
         print('Error: Invalid Command, Please try again.')
+    return Nothing()
 """
 while not game.victory:
     while not turn_end:
@@ -204,7 +219,7 @@ while not game.victory:
         if command.upper() == "EXIT":
             turn_end = True
         else:
-            parse(command)
+            parse(command).do()
 
 
     if not game.victory:

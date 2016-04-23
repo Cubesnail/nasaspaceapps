@@ -63,7 +63,7 @@ class MedicalCentre(Building):
             self.building_time -= 1
             return
 
-        for person in self.persons:
+        fors person in elf.persons:
             person.health += round(10/len(self.persons) + 0.5)
             if person.health >= 10:
                 person.job = None
@@ -101,7 +101,7 @@ class Mine(Building):
 
     def time_pass(self):
         #  TODO
-        if not self.is_built():
+        if not self.is_built):
             self.building_time -= 1
             return
 

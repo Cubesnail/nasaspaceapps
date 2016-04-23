@@ -9,14 +9,14 @@ import random
 # resource order: Al, Fe, Si
 
 
-class Crater:
+class Crater(NatStruct):
     def __init__(self, isExplored):
         self.isBuildable = False
         self.isExplored = isExplored
         self.hasResources = False
 
 
-class Cave:
+class Cave(NatStruct):
     def __init__(self, isExplored):
         self.isBuildable = False
         self.isExplored = isExplored
@@ -35,7 +35,7 @@ class Cave:
             self.resources["Al"] = amtAl
             self.resources["Fe"] = amtFe
             self.resources["Si"] = amtSi
-class Ground:
+class Ground(NatStruct):
     def __init__(self, isExplored):
        self.isBuildable = True
        self.isExplored = False

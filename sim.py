@@ -17,6 +17,15 @@ class Sim:
         self.map = Map(size[0],size[1]) #CONSTANT
         self.victory = False
 
+    def get_person(self, name): #name is str
+        for pplz in self.people:
+            if pplz.name == name:
+                return pplz
+    def person_exist(self,name):
+        for pplz in self.people:
+            if pplz.name == name:
+                return True
+
     def display_summary(self):
         pass
 
@@ -55,14 +64,13 @@ class Collect(Command):
 
 class SendWorker(Command):
     #  TODO
-    def __init__(self, worker, location):
+    def __init__(self, worker, location, game):
         self.location = location
         self.worker = worker
-
+        self.simulation = game
     def do(self):
         #  TODO
-        pass
-
+        self.simulation(self.location).persons.append(self.worker)
 
 class Research(Command):
     #  TODO
@@ -74,32 +82,76 @@ class Research(Command):
         #  TODO
         pass
 
+class Explore(Command):
+
+    # TODO: implement explore with a worker
+    #       remove worker from prev location, add to curr location
+
+    def __init__(self, worker, location, game):
+        self.location = location
+        self.worker = worker
+        if type(game.get_environment(location)) == NatStruct:
+            game.get_environment(location).isExplored = True
+
 
 game = Sim([10,10])
 
 turn_end = False
 
+def help_commands():
+    print("-----Help text------")
+    print("syntax: COMMAND (STRUCTURE) (WORKER) LOCATION_X LOCATION_Y")
+    print("commands: build, destroy, help, collect, send, explore, cancel")
+    print("structures (buildings): CommandCentre, MedicalCentre, Agriculture, Mine, Lab")
+    print("example syntax:")
+    print("-- build STRUCTURE LOC_X LOC_Y")
+    print("-- destroy LOC_X LOC_Y")
+    print("-- help")
+    print("-- send WORKER LOC_X LOC_Y")
 
 def parse(user_input):
     command_list = user_input.split()
-
+    # syntax: command || location || 
+    # example: build mine 1 2
+    # -> builds mine at location 1,2
     if command_list[0].upper() == 'build'.upper():
         if command_list[1].upper in ['MINE','LAB','COMMANDCENTRE','MEDICALCENTRE','AGRICULTURE']: #  TODO
-            if command_list[3] < game.map.height and command_list[4] < game.map.width:
+            if command_list[2] < game.map.height and command_list[3] < game.map.width:
                 if command_list[1].upper == 'MINE':
                     return Build(Mine(),[command_list[3],command_list[4]],game)
+                else if command_list[1].upper == 'LAB':
+                    return Build(Lab(), [command_list[3], command_list[4]], game)
+                else if command_list[1].upper == 'COMMANDCENTRE':
+                    return Build(CommandCentre(), [command_list[3], command_list[4]], game)
+                else if command_list[1].upper == 'MEDICALCENTRE':
+                    return Build(MedicalCentre(), [command_list[3], command_list[4]], game)
+                else if command_list[1].upper == 'AGRICULTURE':
+                    return Build(Agriculture(), [command_list[3], command_list[4]], game)
+                else:
+                    print('Error: Invalid Command, Please try again.')
+            else:
+                print('Error: invalid location')
+        else:
+            print('Error: invalid structure')
     elif command_list[0].upper() == 'destroy'.upper():
         if command_list[1].isdigit() and command_list[2].isdigit() and command_list[1] <= game.map.height and \
             command_list[2] <= game.map.width:
             return Destroy(command_list[1],command_list[2])
     elif command_list[0].upper() == 'help'.upper():
-        pass
+        help_commands()
     elif command_list[0].upper() == 'collect'.upper():
-        pass
+        if command_list[1] < game.map.height and command_list[2] < game.map.width:
+            return Collect([command_list[1], command_list[2]], game)
     elif command_list[0].upper() == 'send'.upper():
-        pass
+        # if command_list[1] in game.people[]
+        if command_list[1] < game.map.height and command_list[2] < game.map.width:
+            work = game.people[command_list[1]]
+            return Send(game.get_person(command_list[1], [command_list[2], command_list[3], game])
+
     elif command_list[0].upper() == 'explore'.upper():
-        pass
+        if command_list[2] < game.map.width and command_list[3] < game.map.width:
+            return Explore(game.get_person(command_list[1]), [command_list[2], command_list[3])
+
     elif command_list[0].upper() == 'cancel'.upper():
         pass
     else:

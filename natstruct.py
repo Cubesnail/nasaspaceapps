@@ -35,4 +35,9 @@ class Cave:
             self.resources["Al"] = amtAl
             self.resources["Fe"] = amtFe
             self.resources["Si"] = amtSi
-
+class Ground:
+    def __init__(self, isExplored):
+       self.isBuildable = True
+       self.isExplored = False
+       self.resources = {}
+       self.hasResources = False

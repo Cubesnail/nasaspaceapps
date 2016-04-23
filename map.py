@@ -27,7 +27,7 @@ class Map:
         for k in range(0, self.height):
             temp = ["|"]
             for x in range(0, self.width):
-                temp.append(None)
+                temp.append(Ground(False))
             temp.append("|")
             #  temp.append('\n')
             self.screen.append(temp)
@@ -63,6 +63,9 @@ class Map:
                 print(self.screen[k][x], end = '')
             print()
 
+    def get_environment(self, location):
+        return self.screen[location[0], location[1]]
+
     def __str__(self):
         result = ''
         for column in self.screen:
@@ -83,7 +86,7 @@ class Map:
                     result = result + '^'
                 elif type(row) is str:
                     result = result + row
-                else:
+                elif type(row) is Ground:
                     result = result + 'O'
             result = result + '\n'
         return result

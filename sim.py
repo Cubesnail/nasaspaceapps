@@ -14,11 +14,12 @@ class Sim:
         self.people.append(Person('Jessica', '20*52', '45', 'F'))
         self.people.append(Person('Jane', '20*52', '45', 'F'))
         self.people.append(Person('Jackyln', '20*52', '45', 'F'))
-        self.resources = Resources(100000, 100000, 100000, 100000, 100000, 100000)
+        self.resources = Resources(100000, 100000, 100000, 100000, 100000, 100000, 100000)
         self.plants = {}
         self.map = Map(size[0],size[1]) #CONSTANT
         self.map.initialize()
         self.victory = False
+        self.buildings = []
 
 
     def get_person(self, name): #name is str
@@ -38,6 +39,8 @@ class Sim:
         for column in self.map.screen:
             for row in column:
                 row.time_pass()
+        self.resources.food -= len(self.people) * 10
+
 
 
 class Build(Command):
@@ -47,6 +50,8 @@ class Build(Command):
     def do(self):
         if self.building.resources < self.simulation.resources:
             self.simulation.map.screen[self.location[0]][self.location[1]] = self.building
+            self.simulation.resources -= self.building.resources
+            self.simulation.buildng.append(self.building)
         else:
             print('Not enough resources.')
 
@@ -102,6 +107,10 @@ class Explore(Command):
         self.worker = worker
         if type(game.get_environment(location)) == NatStruct:
             game.get_environment(location).isExplored = True
+
+    def do(self):
+        pass
+
 
 class Nothing(Command):
     def __init__(self):
@@ -210,7 +219,7 @@ while not game.victory:
 
     os.system("cls" if os.name == 'nt' else 'clear')
     while not turn_end:
-
+        print(game.resources)
         print(game.map)
         command = input("Enter a command: ")
         #_=os.system("clear") # linux / unix

@@ -21,9 +21,9 @@ class Material:
 
 
 class Resources:
-    def __init__(self, Al=0, Fe=0, Si=0, acrylic=0, H2O=0, O2=0):
-        self.Al, self.Fe, self.Si, self.acrylic, self.H2O, self.O2 = \
-                Al, Fe, Si, acrylic, H2O, O2
+    def __init__(self, Al=0, Fe=0, Si=0, acrylic=0, H2O=0, O2=0, food = 0):
+        self.Al, self.Fe, self.Si, self.acrylic, self.H2O, self.O2, self.food = \
+                Al, Fe, Si, acrylic, H2O, O2, food
 
     # __lt__: Resources Resources
     def __lt__(self, other):
@@ -32,7 +32,8 @@ class Resources:
                 self.Si <= other.Si and \
                 self.acrylic <= other.acrylic and \
                 self.H2O <= other.H2O and \
-                self.O2 <= other.O2
+                self.O2 <= other.O2 and \
+                self.food <= other.food
 
     def __eq__(self, other):
         return self.Al == other.Al and \
@@ -40,7 +41,25 @@ class Resources:
                 self.Si == other.Si and \
                 self.acrylic == other.acrylic and \
                 self.H2O == other.H2O and \
-                self.O2 == other.O2
+                self.O2 == other.O2 and \
+                self.food == other.food
 
     def __gt__(self, other):
         return other < self
+
+    def __str__(self):
+        result = 'Al: {}kg \nFe: {}kg \nSi: {}kg \nAcrylic: {}kg \nH2O: {}kg \nO2: {}kg \nFood: {}kg'.format(
+            self.Al, self.Fe, self.Si, self.acrylic, self.H2O, self.O2, self.food
+        )
+        return result
+
+    def __isub__(self, other):
+        result = self
+        result.Al -= other.Al
+        result.Fe -= other.Fe
+        result.Si -= other.Si
+        result.acrylic -= other.acrylic
+        result.H2O -= other.H2O
+        result.O2 -= other.O2
+        result.food -= other.food
+        return result

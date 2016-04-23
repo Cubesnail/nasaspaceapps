@@ -183,6 +183,8 @@ def parse(user_input):
         pass
     elif command_list[0].upper() == 'EXIT':
         pass
+    elif command_list[0].upper() == 'INFO':
+        print(game.map.screen[int(command_list[1])][int(command_list[2])])
     else:
         print('Error: Invalid Command, Please try again.')
     return Nothing()

@@ -85,6 +85,7 @@ class MedicalCentre(Building):
             result = result + '{} is working here.'
         else:
             result = result + 'This medical centre currently has no workers and is not functional.'
+        return result
 
 class CommandCentre(Building):
 
@@ -149,14 +150,15 @@ class Mine(Building):
 
     def __str__(self):
         result = 'Location {}, {}'.format(self.location[0],self.location[1]) + ' currently has ' + \
-                 str(self.resources)
+                 str(self.amount) + '\n'
         if self.worker:
             result = result + 'Worker: {}'.format(self.worker)
         else:
             result = result + 'No worker.'
         if not self.is_built():
             result = result + \
-                     'It is currenntly under construction and will take {} weeks to finish'.format(self.building_time)
+                     'It is currently under construction and will take {} weeks to finish'.format(self.building_time)
+        return result
 
 
 class Lab(Building):

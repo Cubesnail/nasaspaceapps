@@ -5,11 +5,11 @@ from materials import Resources
 
 class Agriculture(Building):
 
-    def __init__(self, plant: Plant = None, worker: Person = None):
+    def __init__(self, location: list = None, plant: Plant = None, worker: Person = None):
         """
 
         :param plant: Plant
-        :param cost:
+
         :return:
         """
         self.plant = plant
@@ -18,6 +18,8 @@ class Agriculture(Building):
         self.building_time = 20 #CONSTANT
         self.worker = worker
         self.resources = Resources(3000, 11000)
+        self.location = location
+        self.type = 'Agriculture'
     def is_built(self):
         return self.building_time <= 0
 
@@ -48,13 +50,15 @@ class Agriculture(Building):
 
 class MedicalCentre(Building):
 
-    def __init__(self, worker: Person = None):
+    def __init__(self, location: list= None, worker: Person = None):
+        self.location = location
         self.capacity = 10 #CONSTANT
         self.building_time = 20 #CONSTANT
         self.persons = []
         self.worker = worker
         self.amount = Resources()
         self.resources = Resources(3000, 9000, 2000)
+        self.type = 'Medical Centre'
 
     def is_built(self):
         return self.building_time <= 0
@@ -72,13 +76,23 @@ class MedicalCentre(Building):
     def is_full(self):
         return len(self.persons) == self.capacity
 
+    def __str__(self):
+        result = 'Your medical centre at {}, {}'.format(self.location[0], self.location[1]) + '\n'
+        if not self.is_built():
+            result = result + \
+                'This medical centre is under construction and will take {} weeks to finish'.format(self.building_time)
+        if self.worker:
+            result = result + '{} is working here.'
+        else:
+            result = result + 'This medical centre currently has no workers and is not functional.'
 
 class CommandCentre(Building):
 
-    def __init__(self, worker: Person = None):
+    def __init__(self, location: list= None, worker: Person = None):
         self.building_time = 30 #CONSTANT
         self.worker = worker
-
+        self.location = location
+        self.type = 'Agriculture'
         self.resources = Resources(4000, 10000, 1000) 
     def is_built(self):
         return self.building_time <=0
@@ -86,15 +100,28 @@ class CommandCentre(Building):
     def time_pass(self):
         self.building_time -= 1
 
+    def __str__(self):
+        result = 'Your command centre at {}, {}:'.format(self.location[0], self.location[1])
+        if not self.is_built():
+            result = result + \
+                     '\nIs currently under construction and will be finished in {} weeks.'.format(self.building_time)
+        if self.worker:
+            result = result + '\nWorker: {}'.format(self.worker.name)
+        else:
+            result = result + '\nHas no worker and is currently nonfunctional'
+        return result
+
 
 class Mine(Building):
 
-    def __init__(self, worker: Person = None):
+    def __init__(self, location= None, worker: Person = None):
         self.building_time = 10 #CONSTANT
+        self.location = location
         self.worker = worker
         self.amount = Resources()
         self.capacity = 30 #CONSTANT
         self.amount = Resources()
+        self.type = 'Agriculture'
         self.resources = Resources(0, 12000) 
     def is_built(self):
         return self.building_time <= 0
@@ -120,15 +147,27 @@ class Mine(Building):
             return True
         return False
 
+    def __str__(self):
+        result = 'Location {}, {}'.format(self.location[0],self.location[1]) + ' currently has ' + \
+                 str(self.resources)
+        if self.worker:
+            result = result + 'Worker: {}'.format(self.worker)
+        else:
+            result = result + 'No worker.'
+        if not self.is_built():
+            result = result + \
+                     'It is currenntly under construction and will take {} weeks to finish'.format(self.building_time)
+
 
 class Lab(Building):
 
-    def __init__(self, worker: Person = None, research = None, research_time = 0):
+    def __init__(self, location= None, worker: Person = None, research = None, research_time = 0):
         self.building_time = 15 #CONSTANT
+        self.location = location
         self.worker = worker
         self.research = research
         self.research_time = research_time
-
+        self.type = 'Lab'
         self.resources = Resources(5000, 9000, 4000) 
     def is_built(self):
         return self.building_time <= 0
@@ -143,3 +182,7 @@ class Lab(Building):
     def time_left(self):
         if self.research_time:
             return self.research_time
+
+    def __str__(self):
+        #  TODO
+        pass

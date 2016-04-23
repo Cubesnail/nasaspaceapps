@@ -41,7 +41,6 @@ class Sim:
         self.resources.food -= len(self.people) * 10
 
 
-
 class Build(Command):
     def __init__(self, building, location, simulation):
         self.location, self.building, self.simulation = location, building, simulation
@@ -51,6 +50,8 @@ class Build(Command):
             self.simulation.map.screen[self.location[0]][self.location[1]] = self.building
             self.simulation.resources -= self.building.resources
             self.simulation.buildings.append(self.building)
+            self.building.location = self.location
+
         else:
             print('Not enough resources.')
 
@@ -84,10 +85,11 @@ class SendWorker(Command):
         #  TODO
         self.simulation.map.screen[self.location[0]][self.location[1]].worker = self.worker
 
+
 class Research(Command):
 
     #  TODO
-    def __init__(self, product, location):
+    def __i88init__(self, product, location):
         self.location = location
         self.product = product
 

@@ -36,9 +36,8 @@ class Sim:
         pass
 
     def pass_time(self):
-        for column in self.map.screen:
-            for row in column:
-                row.time_pass()
+        for building in self.buildings:
+            building.time_pass()
         self.resources.food -= len(self.people) * 10
 
 
@@ -51,7 +50,7 @@ class Build(Command):
         if self.building.resources < self.simulation.resources:
             self.simulation.map.screen[self.location[0]][self.location[1]] = self.building
             self.simulation.resources -= self.building.resources
-            self.simulation.buildng.append(self.building)
+            self.simulation.buildings.append(self.building)
         else:
             print('Not enough resources.')
 

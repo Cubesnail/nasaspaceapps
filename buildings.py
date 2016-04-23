@@ -12,20 +12,28 @@ class Agriculture(Building):
 
         :return:
         """
-        self.plant = plant
-        self.amount = 0
+        self.plants = []
+        #self.amount = 0
         self.capacity = 1000
         self.building_time = 20 #CONSTANT
         self.worker = worker
         self.resources = Resources(3000, 11000)
         self.location = location
         self.type = 'Agriculture'
+
+    def plant_plant(self, someplant):
+        if someplant.name not in self.plants:
+            self.plants.append(someplant)
+
+
     def is_built(self):
         return self.building_time <= 0
 
     def collect(self):
         #  TODO
         if self.is_built() and self.worker:
+            temp = Resources()
+            temp, self.amount = self.amount, temp
             return self.amount
         return -1
 
@@ -33,8 +41,11 @@ class Agriculture(Building):
 
         if self.is_built():
             if self.plant and self.worker:
-                self.amount += 100
-                self.plant.update_growth()
+                #self.amount += 100
+                #self.plant.update_growth()
+                for plt in self.plants:
+                    plt.update_growth()
+                    
         self.building_time -= 1
 
     def is_empty(self):
@@ -46,7 +57,6 @@ class Agriculture(Building):
 
     def __repr__(self):
         pass
-    
 
 class MedicalCentre(Building):
 
@@ -131,12 +141,17 @@ class Mine(Building):
         #  TODO
         if self.is_built() and self.worker:
             self.amount.Al += 1000
+            self.amount.Fe += 1000
+            self.amount.Si += 1000
 
-        self.building_time -= 1
+        elif not self.is_built():
+            self.building_time -= 1
 
     def collect(self):
+        temp = Resources()
+        temp, self.amount = self.amount, temp
+        return temp
 
-        return self.amount
     def is_empty(self):
         return self.amount == {}
 

@@ -2,15 +2,15 @@
 
 class Plant:
     # __init__: self, Str, Num, Num, Int, Int, Int
-    def __init__(self, name, rog, area, numHarvest, numGrow, mass):
+    def __init__(self, name, rog, numGrow):
         self.name = name
-        self.mass = mass
+        # self.mass = mass
         self.rog = rog
         # semi-arbitrary constant
         # units: percent growth per week
 
-        self.area = area  # occupied area at full growth
-        self.numHarvest = numHarvest
+        # self.area = area  # occupied area at full growth
+        self.numHarvest = 0 
         self.numGrow = numGrow
         self.percentGrow = 0
 

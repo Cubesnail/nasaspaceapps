@@ -74,3 +74,5 @@ class Resources:
         result.O2 += other.O2
         result.food += other.food
         return result
+
+

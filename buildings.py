@@ -157,7 +157,7 @@ class Mine(Building):
             result = result + 'No worker.'
         if not self.is_built():
             result = result + \
-                     'It is currently under construction and will take {} weeks to finish'.format(self.building_time)
+                     'It is currently under construction and will take {} weeks to finish\n'.format(self.building_time)
         return result
 
 

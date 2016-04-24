@@ -18,7 +18,7 @@ class Agriculture(Building):
         self.capacity = 1000
         self.building_time = 20 #CONSTANT
         self.worker = worker
-        self.resources = Resources(3000, 11000)
+        self.resources = Resources(150, 550)
         self.location = location
         self.type = 'Agriculture'
         self.food = Food()
@@ -116,7 +116,7 @@ class MedicalCentre(Building):
         self.persons = []
         self.worker = worker
         self.amount = Resources()
-        self.resources = Resources(3000, 9000, 2000)
+        self.resources = Resources(150, 450, 100)
         self.type = 'Medical Centre'
 
     def is_built(self):
@@ -153,7 +153,7 @@ class CommandCentre(Building):
         self.worker = worker
         self.location = location
         self.type = 'Agriculture'
-        self.resources = Resources(4000, 10000, 1000) 
+        self.resources = Resources(200, 500, 50)
     def is_built(self):
         return self.building_time <=0
 
@@ -182,16 +182,16 @@ class Mine(Building):
         self.capacity = 30 #CONSTANT
         self.amount = Resources()
         self.type = 'Agriculture'
-        self.resources = Resources(0, 12000) 
+        self.resources = Resources(0, 12000)
     def is_built(self):
         return self.building_time <= 0
 
     def time_pass(self):
         #  TODO
         if self.is_built() and self.worker:
-            self.amount.Al += 1000
-            self.amount.Fe += 1000
-            self.amount.Si += 1000
+            self.amount.Al += 50
+            self.amount.Fe += 50
+            self.amount.Si += 50
 
         elif not self.is_built():
             self.building_time -= 1
@@ -234,7 +234,7 @@ class Lab(Building):
         self.research = research
         self.research_time = research_time
         self.type = 'Lab'
-        self.resources = Resources(5000, 9000, 4000) 
+        self.resources = Resources(250, 450, 200)
     def is_built(self):
         return self.building_time <= 0
 

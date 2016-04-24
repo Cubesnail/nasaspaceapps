@@ -14,6 +14,7 @@ class Plant:
         self.numGrow = 0
         self.percentGrow = 0
         self.numEatable = 0
+        self.isGrow = False
 
     # update_growth: self -> void
     # effects: modifies self.percentGrow, self.numHarvest, self.numGrow
@@ -21,12 +22,13 @@ class Plant:
     def update_growth(self):
         # assume each call to update_growth() updates per time unit of
         # rog
-        if self.numGrow != 0:
+        if self.isGrow:
             self.percentGrow += rog
             if self.percentGrow >= 100:
                 self.numHarvest += self.numGrow
                 self.numGrow = 0
                 self.percentGrow = 0
+                self.isGrow = False
 
     def harvest(self):
         self.numEatable = self.numHarvest

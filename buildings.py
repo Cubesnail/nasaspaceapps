@@ -22,9 +22,22 @@ class Agriculture(Building):
         self.location = location
         self.type = 'Agriculture'
         self.food = Food()
-    def plant_plant(self, someplant):
-        if someplant.name not in self.plants:
-            self.plants.append(someplant)
+    def plant_plant(self, plantname, numGrow):
+        if someplant.lower() == "rice":
+            self.food.rice.isGrow = True
+            self.food.rice.numGrow = numGrow
+
+        if someplant.lower() == "wheat":
+            self.food.wheat.isGrow = True
+            self.food.wheat.numGrow = numGrow
+
+        if someplant.lower() == "onion":
+            self.food.onion.isGrow = True
+            self.food.onion.numGrow = numGrow
+
+        if someplant.lower() == "radish":
+            self.food.radish.isGrow = True
+            self.food.radish.numGrow = numGrow
 
 
     def is_built(self):
@@ -55,7 +68,7 @@ class Agriculture(Building):
     def time_pass(self, time: int = 1):
 
         if self.is_built():
-            if self.plant and self.worker:
+            if self.worker:
                 #self.amount += 100
                 #self.plant.update_growth()
                 for plt in self.plants:
@@ -72,6 +85,27 @@ class Agriculture(Building):
 
     def __repr__(self):
         pass
+
+    def __str__(self):
+        if self.worker:
+            worker = "worker: " + self.worker.name  + "\n"
+        else:
+            worker = "worker: " + "none" + "\n"
+        builtness = "built: " + str(self.is_built()) + "\n"
+
+        rice = "Rice: \n" + \
+                "grow? " + str(self.food.rice.isGrow) + "harvestable: " + str(self.food.rice.numHarvest) + \
+                "growth percent: " + str(self.food.rice.percentGrow) + "\n"
+        wheat = "Wheat: \n" + \
+                "grow? " + str(self.food.wheat.isGrow) + "harvestable: " + str(self.food.wheat.numHarvest) + \
+                "growth percent: " + str(self.food.wheat.percentGrow) + "\n"
+        onion = "Onion: \n" + \
+                "grow? " + str(self.food.onion.isGrow) + "harvestable: " + str(self.food.onion.numHarvest) + \
+                "growth percent: " + str(self.food.onion.percentGrow) + "\n"
+        radish = "Radish: " + \
+                "grow? " + str(self.food.radish.isGrow) + "harvestable: " + str(self.food.radish.numHarvest) + \
+                "growth percent: " + str(self.food.radish.percentGrow) + "\n"
+        return builtness + worker + rice + wheat + onion + radish
 
 class MedicalCentre(Building):
 

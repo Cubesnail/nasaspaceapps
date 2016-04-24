@@ -47,7 +47,7 @@ class Resources:
         self.Al, self.Fe, self.Si, self.acrylic, self.H2O, self.O2, self.food = \
             Al, Fe, Si, acrylic, H2O, O2, food
 
-    def __lt__(self, other: Resources):
+    def __lt__(self, other):
         """Return true if self is less than other and false otherwise
 
         :param other:

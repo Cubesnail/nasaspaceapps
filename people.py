@@ -1,8 +1,21 @@
 # PEOPLE
 
 class Person:
-    # __init__: self, Str, Nat, Int, Int, Int, Str
+    """Person class. Able to work within the buildings
+
+    """
     def __init__(self, name, age, mass, sex, job = None, health: int = 0,location = []):
+        """Initialize a person object.
+
+        :param name: str
+        :param age: int
+        :param mass: int
+        :param sex: 'M'/'F'
+        :param job: None
+        :param health: 0
+        :param location: None
+        :return:
+        """
         self.name = name
         self.age = age  # age in weeks
         self.mass = mass  # weight in kilo
@@ -12,10 +25,11 @@ class Person:
         self.location = location
 
     def update_age(self):
-        self.age += 1
+        """Update the age of the person on a weekly basis.
 
-    def update_health(self, factor):
-        self.health += factor
+        :rtype: None
+        """
+        self.age += 1
 
     def is_ded(self):
         return self.health <= -100 or self.age >= 70*52

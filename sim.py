@@ -122,7 +122,7 @@ class Collect(Command):
             temp = self.simulation.map.screen[self.location[0], self.location[1]].harvestall()
             temp = self.simulation.map.screen[self.location[0], self.location[1]].collect()
             game.Food += temp
-
+            game.resources.food = game.Food.totalfood
 
 
 class SendWorker(Command):
@@ -250,6 +250,82 @@ def parse(user_input):
         print('Error: Invalid Command, Please try again.')
     return Nothing()
 
+
+
+intro_materials = {'Al':0, 'Fe':0, 'Si':0, 'Acrylic':0, 'H2O':0, 'Food':0 }
+
+def intro_materials_parser(user_input):
+
+    command_list = user_input.split()
+
+    if command_list[0].lower() == 'add':
+        intro_materials[command_list[1]] += int(command_list[2])
+        return 0
+    elif command_list[0].lower() == 'sub':
+        intro_materials[command_list[1]] -= int(command_list[2])
+        return 0
+    elif command_list[0].lower() == 'h':
+        print(msgcmds)
+        garbage = input("press any key to continue: ")
+        return 0
+
+    elif command_list[0].lower() == 'done':
+        print("done!")
+        return 1
+
+    else:
+        print("invalid input")
+        return -1
+
+
+
+ # introductory loop
+
+msg1 = "After many years of hard work, the human race is ready to launch its first manned mission to mars. However, the state of the earth is in ruins. These astronauts won't be coming back. Your job is to manage mission Cultivator. First, you must prove that colonization is possible with a two year test run before mission control sends additional earth-bound resources and people."
+
+msg2 = "You have 3000kg of total allowed cargo. Materials that can be brought: Aluminum, Iron, Silicone, Acrylic, Food, and Water. Be aware that it will take 150 days to travel to mars. There are 6 people on board. Each person consumes, on average, 2kg of food and 1kg of water per day."
+
+msgcmds = "Use the syntax 'COMMAND MATERIAL MASS' \n " +\
+        "Commands: add, sub \n" + \
+        "Materials: Al, Fe, Si, Acrylic, Food, H2O\n" + \
+        "Type h to view this information again.\n"
+
+def disp_init_mat(matdict):
+    totalmass = 0
+    for mat in matdict:
+        print(str(mat) + ": " + str(matdict[mat]))
+        totalmass += matdict[mat]
+    print("total mass: " + str(totalmass))
+
+materialschosen = False
+
+print(msg1)
+print(msg2)
+print(msgcmds)
+uin = input("press any key to continue ")
+
+while not materialschosen:
+
+    os.system("cls" if os.name == 'nt' else 'clear')
+
+    disp_init_mat(intro_materials)
+
+    user_input = input("Enter a command: ")
+    errcode = intro_materials_parser(user_input)
+
+    if errcode==1:
+        materialschosen == True
+        break
+
+
+game.resources.Al = intro_materials["Al"]
+game.resources.Fe = intro_materials["Fe"]
+game.resources.Si = intro_materials["Si"]
+game.resources.acrylic = intro_materials["Acrylic"]
+game.resources.H2O = intro_materials["H2O"]
+
+game.food.totalfood = intro_materials["Food"]
+game.resources.food = game.food.totalfood
 
 # game loop
 while not game.victory:

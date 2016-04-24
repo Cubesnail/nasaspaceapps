@@ -1,5 +1,5 @@
 class Food:
-    def __init__(self, ):
+    def __init__(self):
         self.wheat = Plant("Wheat", 20)
         self.rice = Plant("Rice", 20)
         self.onion = Plant("Onion", 15)
@@ -45,35 +45,18 @@ class Food:
         result.radish += other.radish
         result.totalfood += other.totalfood
         return result
+    def collect(self):
+        temp = Plant()
+        temp.totalfood += self.wheat.numEatable
+        temp.totalfood += self.rice.numEatable
+        temp.totalfood += self.onion.numEatable
+        temp.totalfood += self.radish.numEatable
 
-class Wheat(Food):
+        self.wheat.numEatable = 0
+        self.rice.numEatable = 0
+        self.onion.numEatable = 0
+        self.radish.numEatable = 0
 
-    def __init__(self):
-        self.carbohydrates = 0
-        self.fat = 0
-        self.fibre = 0
-        self.protein = 0
-        self.calories = 0
+        return temp
 
-    pass
-class Rice(Food):
-    def __init__(self):
-        self.carbohydrates = 0
-        self.fat = 0
-        self.fibre = 0
-        self.protein = 0
-        self.calories = 0
-class Onion(Food):
-    def __init__(self):
-        self.carbohydrates = 0
-        self.fat = 0
-        self.fibre = 0
-        self.protein = 0
-        self.calories = 0
-class Radish(Food):
-    def __init__(self):
-        self.carbohydrates = 0
-        self.fat = 0
-        self.fibre = 0
-        self.protein = 0
-        self.calories = 0
+

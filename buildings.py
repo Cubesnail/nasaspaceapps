@@ -20,7 +20,7 @@ class Agriculture(Building):
         self.resources = Resources(3000, 11000)
         self.location = location
         self.type = 'Agriculture'
-
+        self.food = Food()
     def plant_plant(self, someplant):
         if someplant.name not in self.plants:
             self.plants.append(someplant)
@@ -30,13 +30,19 @@ class Agriculture(Building):
         return self.building_time <= 0
 
     def collect(self):
-        #  TODO
-        if self.is_built() and self.worker:
-            temp = Food()
-            temp.
-            temp, self.amount = self.amount, temp
-            return self.amount
-        return -1
+        temp = Plant()
+        temp.totalfood += self.wheat.numEatable
+        temp.totalfood += self.rice.numEatable
+        temp.totalfood += self.onion.numEatable
+        temp.totalfood += self.radish.numEatable
+
+        self.wheat.numEatable = 0
+        self.rice.numEatable = 0
+        self.onion.numEatable = 0
+        self.radish.numEatable = 0
+
+        return temp
+
 
     def time_pass(self, time: int = 1):
 

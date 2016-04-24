@@ -13,6 +13,7 @@ class Plant:
         self.numHarvest = 0 
         self.numGrow = numGrow
         self.percentGrow = 0
+        self.numEatable = 0
 
     # update_growth: self -> void
     # effects: modifies self.percentGrow, self.numHarvest, self.numGrow
@@ -27,13 +28,14 @@ class Plant:
                 self.numGrow = 0
                 self.percentGrow = 0
 
-    # harvest: self -> Int
-    # harvest returns the number of plants for harvest, sets value to 0
-    #	after return.
     def harvest(self):
-        temp = self.numHarvest
+        self.numEatable = self.numHarvest
         self.numHarvest = 0
-        return temp
+
 
     def is_full(self):
         return self.numHarvest == 100
+
+    def get_num_eat(self):
+        return self.numEatable
+

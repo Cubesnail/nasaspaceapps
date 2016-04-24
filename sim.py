@@ -22,6 +22,7 @@ class Sim:
         self.victory = False
         self.buildings = []
         self.ded = []
+        self.food = Food()
     def get_person(self, name):  # name is str
         for pplz in self.people:
             if pplz.name == name:
@@ -109,10 +110,18 @@ class Collect(Command):
         self.location, self.simulation = location, simulation
 
     def do(self):
-        temp = self.simulation.map.screen[self.location[0]][self.location[1]].collect()
-        if temp == Resources():
-            print('No resources were collected.')
-        game.resources += temp
+        if type(self.simulation.map.screen[self.location[0], self.location[1]]) == Mine:
+            temp = self.simulation.map.screen[self.location[0]][self.location[1]].collect()
+            if temp == Resources():
+                print('No resources were collected.')
+            game.resources += temp
+
+        if type(self.simulation.map.screen[self.location[0], self.location[1]]) == Agriculture:
+
+            temp = self.simulation.map.screen[self.location[0], self.location[1]].harvest()
+            temp = self.simulation.map.screen[self.location[0], self.location[1]].collect()
+            game.Food += temp
+
 
 
 class SendWorker(Command):

@@ -22,7 +22,7 @@ class Agriculture(Building):
         self.location = location
         self.type = 'Agriculture'
         self.food = Food()
-    def plant_plant(self, plantname, numGrow):
+    def plant_plant(self, someplant, numGrow):
         if someplant.lower() == "rice":
             self.food.rice.isGrow = True
             self.food.rice.numGrow = numGrow
@@ -64,6 +64,11 @@ class Agriculture(Building):
 
         return temp
 
+    def update_plants(self):
+        self.food.wheat.update_growth()
+        self.food.rice.update_growth()
+        self.food.onion.update_growth()
+        self.food.radish.update_growth()
 
     def time_pass(self, time: int = 1):
 
@@ -71,9 +76,10 @@ class Agriculture(Building):
             if self.worker:
                 #self.amount += 100
                 #self.plant.update_growth()
-                for plt in self.plants:
-                    plt.update_growth()
-                    
+                #for plt in self.plants:
+                #    plt.update_growth()
+                self.update_plants()
+
         self.building_time -= 1
 
     def is_empty(self):

@@ -41,6 +41,7 @@ class Sim:
             building.time_pass()
         self.resources.food -= len(self.people) * 10 * 7
         self.resources.H2O -= len(self.people) * 1 * 7
+        
         for people in self.people:
             health(people)
 
@@ -237,6 +238,8 @@ def parse(user_input):
     elif command_list[0].upper() == 'explore'.upper():
         if command_list[2] < game.map.width and command_list[3] < game.map.width:
             return Explore(game.get_person(command_list[1]), [command_list[2], command_list[3]], game)
+    elif command_list[0].upper() == "GROW":
+        game.map.screen[int(command_list[2])][int(command_list[3])].plant_plant(command_list[1], 20)
     elif command_list[0].upper() == 'cancel'.upper():
         pass
     elif command_list[0].upper() == 'EXIT':
@@ -252,7 +255,7 @@ def parse(user_input):
 
 
 
-intro_materials = {'Al':0, 'Fe':0, 'Si':0, 'Acrylic':0, 'H2O':0, 'Food':0 }
+intro_materials = {'Al':10000, 'Fe':100000, 'Si':1000000, 'Acrylic':100000, 'H2O':10000, 'Food':1000000 }
 
 def intro_materials_parser(user_input):
 
@@ -303,7 +306,7 @@ print(msg1)
 print(msg2)
 print(msgcmds)
 uin = input("press any key to continue ")
-
+"""
 while not materialschosen:
 
     os.system("cls" if os.name == 'nt' else 'clear')
@@ -316,7 +319,7 @@ while not materialschosen:
     if errcode==1:
         materialschosen == True
         break
-
+"""
 
 game.resources.Al = intro_materials["Al"]
 game.resources.Fe = intro_materials["Fe"]

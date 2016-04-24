@@ -23,7 +23,7 @@ class Plant:
         # assume each call to update_growth() updates per time unit of
         # rog
         if self.isGrow:
-            self.percentGrow += rog
+            self.percentGrow += self.rog
             if self.percentGrow >= 100:
                 self.numHarvest += self.numGrow
                 self.numGrow = 0

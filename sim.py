@@ -2,6 +2,7 @@ from map import Map
 from people import Person
 from commands import Command
 from buildings import *
+from random import randrange
 import os  # currently for OS-dependent clearing
 
 
@@ -20,7 +21,7 @@ class Sim:
         self.map.initialize()
         self.victory = False
         self.buildings = []
-
+        self.ded = []
     def get_person(self, name):  # name is str
         for pplz in self.people:
             if pplz.name == name:
@@ -38,8 +39,36 @@ class Sim:
         for building in self.buildings:
             building.time_pass()
         self.resources.food -= len(self.people) * 10
+        self.resources.H2O -= len(self.people) * 20
+        for people in self.people:
+            health(people)
 
-
+def health(worker: Person):
+    if game.map.screen[worker.location[0]][worker.location[1]].type == 'MedicalCentre':
+        return
+    if worker.sex == 'M':
+        pronouns = ['he', 'him', 'his']
+    else:
+        pronouns = ['she', 'her', 'her']
+    fatal = '{} has tripped over {} shoelace and has been fatally injured.'.format(worker.name, pronouns[2])
+    non_fatal = '{} was injured in a work-related issue.'.format(worker.name)
+    injury = randrange(0,1000)
+    if injury == 0:
+        worker.health -= 150
+        print(fatal)
+    elif injury < 50:
+        worker.health -= 10
+        print(non_fatal)
+    else:
+        if worker.health != 100:
+            worker.health += 1
+    if worker.health <= 0:
+        print('{} has unfortunately died in a minor fender bender.'.format(worker.name))
+    game.ded.append(worker)
+def dead(worker: Person):
+    if worker.location:
+        game.map.screen[worker.location[0]][worker.location[1]] = None
+    game.people.remove(worker)
 class Build(Command):
     def __init__(self, building, location, simulation):
         self.location, self.building, self.simulation = location, building, simulation
@@ -65,23 +94,23 @@ class Destroy(Command):
 
 
 class Collect(Command):
-    #  TODO
     def __init__(self, location, simulation):
         self.location, self.simulation = location, simulation
 
     def do(self):
-        self.simulation.resources += self.simulation.map.screen[self.location[0]][self.location[1]].collect()
+        temp = self.simulation.map.screen[self.location[0]][self.location[1]].collect()
+        if temp == Resources():
+            print('No resources were collected.')
+        game.resources += temp
 
 
 class SendWorker(Command):
-    #  TODO
     def __init__(self, worker, location, sim):
         self.location = location
         self.worker = worker
         self.simulation = sim
 
     def do(self):
-        #  TODO
         if self.worker.location:
             self.simulation.map.screen[self.worker.location[0]][self.worker.location[1]].worker = None
         if self.simulation.map.screen[self.location[0]][self.location[1]].worker:

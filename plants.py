@@ -2,7 +2,7 @@
 
 class Plant:
     # __init__: self, Str, Num, Num, Int, Int, Int
-    def __init__(self, name, rog, numGrow):
+    def __init__(self, name, rog):
         self.name = name
         # self.mass = mass
         self.rog = rog
@@ -11,7 +11,7 @@ class Plant:
 
         # self.area = area  # occupied area at full growth
         self.numHarvest = 0 
-        self.numGrow = numGrow
+        self.numGrow = 0
         self.percentGrow = 0
         self.numEatable = 0
 

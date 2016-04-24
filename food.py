@@ -1,3 +1,5 @@
+from plants import Plant
+
 class Food:
     def __init__(self):
         self.wheat = Plant("Wheat", 20)

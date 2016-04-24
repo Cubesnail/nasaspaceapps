@@ -81,6 +81,7 @@ def dead(worker: Person):
     if len(game.people) == 0:
         print('Good job. You killed everyone. Game Over.')
         quit()
+
 class Build(Command):
     def __init__(self, building, location, simulation):
         self.location, self.building, self.simulation = location, building, simulation
@@ -110,13 +111,13 @@ class Collect(Command):
         self.location, self.simulation = location, simulation
 
     def do(self):
-        if self.simulation.map.screen[self.location[0], self.location[1]] == 'Mine':
+        if self.simulation.map.screen[self.location[0]][self.location[1]] == 'Mine':
             temp = self.simulation.map.screen[self.location[0]][self.location[1]].collect()
             if temp == Resources():
                 print('No resources were collected.')
             game.resources += temp
 
-        if self.simulation.map.screen[self.location[0], self.location[1]] == 'Agriculture':
+        if self.simulation.map.screen[self.location[0]][self.location[1]] == 'Agriculture':
 
             temp = self.simulation.map.screen[self.location[0], self.location[1]].harvestall()
             temp = self.simulation.map.screen[self.location[0], self.location[1]].collect()
@@ -211,8 +212,8 @@ def parse(user_input):
                     return Build(CommandCentre(), [int(command_list[2]), int(command_list[3])], game)
                 elif command_list[1].upper() == 'MEDICALCENTRE':
                     return Build(MedicalCentre(), [command_list[3], command_list[4]], game)
-                elif command_list[1].upper90 == 'AGRICULTURE':
-                    return Build(Agriculture(), [command_list[3], command_list[4]], game)
+                elif command_list[1].upper() == 'AGRICULTURE':
+                    return Build(Agriculture(), [int(command_list[2]), int(command_list[3])], game)
                 else:
                     print('Error: Invalid Command, Please try again.')
             else:

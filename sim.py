@@ -77,6 +77,9 @@ def dead(worker: Person):
         game.map.screen[worker.location[0]][worker.location[1]] = None
     game.people.remove(worker)
     game.ded.append(worker)
+    if len(game.people) == 0:
+        print('Good job. You killed everyone. Game Over.')
+        quit()
 class Build(Command):
     def __init__(self, building, location, simulation):
         self.location, self.building, self.simulation = location, building, simulation

@@ -32,7 +32,8 @@ class Agriculture(Building):
     def collect(self):
         #  TODO
         if self.is_built() and self.worker:
-            temp = Resources()
+            temp = Food()
+            temp.
             temp, self.amount = self.amount, temp
             return self.amount
         return -1

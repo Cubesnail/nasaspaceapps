@@ -43,9 +43,11 @@ class Sim:
         for people in self.people:
             health(people)
 
+
 def health(worker: Person):
-    if game.map.screen[worker.location[0]][worker.location[1]].type == 'MedicalCentre':
-        return
+    if worker.location:
+        if game.map.screen[worker.location[0]][worker.location[1]].type == 'MedicalCentre':
+            return
     if worker.sex == 'M':
         pronouns = ['he', 'him', 'his']
     else:
@@ -62,13 +64,19 @@ def health(worker: Person):
     else:
         if worker.health != 100:
             worker.health += 1
-    if worker.health <= 0:
+    if game.resources.food <= 0:
+        worker.health -= 5
+    if game.resources.H2O <= 10:
+        worker.health -= 10
+    if worker.health <= -100:
         print('{} has unfortunately died in a minor fender bender.'.format(worker.name))
-    game.ded.append(worker)
+        dead(worker)
+
 def dead(worker: Person):
     if worker.location:
         game.map.screen[worker.location[0]][worker.location[1]] = None
     game.people.remove(worker)
+    game.ded.append(worker)
 class Build(Command):
     def __init__(self, building, location, simulation):
         self.location, self.building, self.simulation = location, building, simulation

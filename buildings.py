@@ -2,6 +2,7 @@ from environment import Building
 from plants import Plant
 from people import Person
 from materials import Resources
+from food import Food
 
 class Agriculture(Building):
 
@@ -29,8 +30,15 @@ class Agriculture(Building):
     def is_built(self):
         return self.building_time <= 0
 
+    def harvestall(self):
+        self.rice.harvest()
+        self.wheat.harvest()
+        self.onion.harvest()
+        self.radish.harvest()
+
+
     def collect(self):
-        temp = Plant()
+        temp = Food()
         temp.totalfood += self.wheat.numEatable
         temp.totalfood += self.rice.numEatable
         temp.totalfood += self.onion.numEatable

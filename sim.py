@@ -110,15 +110,15 @@ class Collect(Command):
         self.location, self.simulation = location, simulation
 
     def do(self):
-        if type(self.simulation.map.screen[self.location[0], self.location[1]]) == Mine:
+        if self.simulation.map.screen[self.location[0], self.location[1]] == 'Mine':
             temp = self.simulation.map.screen[self.location[0]][self.location[1]].collect()
             if temp == Resources():
                 print('No resources were collected.')
             game.resources += temp
 
-        if type(self.simulation.map.screen[self.location[0], self.location[1]]) == Agriculture:
+        if self.simulation.map.screen[self.location[0], self.location[1]] == 'Agriculture':
 
-            temp = self.simulation.map.screen[self.location[0], self.location[1]].harvest()
+            temp = self.simulation.map.screen[self.location[0], self.location[1]].harvestall()
             temp = self.simulation.map.screen[self.location[0], self.location[1]].collect()
             game.Food += temp
 

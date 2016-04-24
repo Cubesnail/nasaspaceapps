@@ -39,8 +39,8 @@ class Sim:
     def pass_time(self):
         for building in self.buildings:
             building.time_pass()
-        self.resources.food -= len(self.people) * 10
-        self.resources.H2O -= len(self.people) * 20
+        self.resources.food -= len(self.people) * 10 * 7
+        self.resources.H2O -= len(self.people) * 1 * 7
         for people in self.people:
             health(people)
 

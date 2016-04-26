@@ -1,11 +1,20 @@
-from sim import game
+from sim import Sim
 from environment import *
+from buildings import *
 from materials import Resources
+from location import Location
 
 class Command:
     def do(self):
         raise NotImplementedError
 
+class Info(Command):
+    def __init__(self, building, location, simulation):
+        self.location, self.building, self.simulation = location, building, simulation
+
+    def do(self):
+        #  TODO
+        pass
 
 class Build(Command):
     def __init__(self, building, location, simulation):
@@ -51,10 +60,10 @@ class Collect(Command):
 
 
 class SendWorker(Command):
-    def __init__(self, worker, location, sim):
+    def __init__(self, worker, location, simulation):
         self.location = location
         self.worker = worker
-        self.simulation = sim
+        self.simulation = simulation
 
     def do(self):
         if self.worker.location:
@@ -99,6 +108,53 @@ class Nothing(Command):
     def do(self):
         pass
 
+
+def help_commands():
+    print("-----Help text------")
+    print("syntax: COMMAND (STRUCTURE) (WORKER) LOCATION_X LOCATION_Y")
+    print("commands: build, destroy, help, collect, send, explore, cancel, info")
+    print("structures (buildings): CommandCentre, MedicalCentre, Agriculture, Mine, Lab")
+    print("example syntax:")
+    print("-- build STRUCTURE LOC_X LOC_Y")
+    print("-- destroy LOC_X LOC_Y")
+    print("-- help")
+    print("-- send WORKER LOC_X LOC_Y")
+    print("-- info WORKER/LOC_X LOC_Y")
+
+
+def build_parse():
+    pass
+
+
+def mine_parse():
+    pass
+
+
+def destroy_parse():
+    pass
+
+
+def collect_parse():
+    pass
+
+
+def explore_parse():
+    pass
+
+
+def grow_parse():
+    pass
+
+
+def exit_parse():
+    pass
+
+
+def info_parse():
+    pass
+
+
+'''
 def parse(user_input):
     """ Takes a user input and parses it and returns a command.
     """
@@ -158,14 +214,4 @@ def parse(user_input):
         print('Error: Invalid Command, Please try again.')
     return Nothing()
 
-def help_commands():
-    print("-----Help text------")
-    print("syntax: COMMAND (STRUCTURE) (WORKER) LOCATION_X LOCATION_Y")
-    print("commands: build, destroy, help, collect, send, explore, cancel, info")
-    print("structures (buildings): CommandCentre, MedicalCentre, Agriculture, Mine, Lab")
-    print("example syntax:")
-    print("-- build STRUCTURE LOC_X LOC_Y")
-    print("-- destroy LOC_X LOC_Y")
-    print("-- help")
-    print("-- send WORKER LOC_X LOC_Y")
-    print("-- info WORKER/LOC_X LOC_Y")
+'''

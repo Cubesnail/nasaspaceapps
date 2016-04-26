@@ -1,6 +1,6 @@
 from map import Map
 from people import Person
-from commands import Command
+#  from commands import Command
 from buildings import *
 from random import randrange
 import os  # currently for OS-dependent clearing
@@ -45,7 +45,7 @@ class Sim:
         for people in self.people:
             health(people)
 
-
+'''
 def health(worker: Person):
     if worker.location:
         if game.map.screen[worker.location[0]][worker.location[1]].type == 'MedicalCentre':
@@ -362,3 +362,4 @@ while not game.victory:
         for x in range(skip_time):
             game.pass_time()
     turn_end = False
+'''

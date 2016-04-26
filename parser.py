@@ -1,4 +1,4 @@
-from sim import *
+from sim import Sim
 
 def parse(user_input):
     """ Takes a user input and parses it and returns a command.

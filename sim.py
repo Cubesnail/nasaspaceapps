@@ -198,7 +198,7 @@ def parse(user_input):
     """ Takes a user input and parses it and returns a command.
     """
     command_list = user_input.split()
-    # syntax: command || location || 
+    # syntax: command || location ||
     # example: build mine 1 2
     # -> builds mine at location 1,2
     if command_list[0].upper() == 'build'.upper():

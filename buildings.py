@@ -3,6 +3,7 @@ from plants import Plant
 from people import Person
 from materials import Resources
 from food import Food
+from location import Location
 
 class Agriculture(Building):
 

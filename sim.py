@@ -176,8 +176,8 @@ class Nothing(Command):
         pass
 
 
-game = Sim([10, 10])
 
+game = Sim([10, 10])
 turn_end = False
 
 
